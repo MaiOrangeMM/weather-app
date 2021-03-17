@@ -1,3 +1,9 @@
-h1{
-    text-align: center;
+body {
+  height: 100vh;
+}
+
+.box-overview {
+  background-image: url("src/img/bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
