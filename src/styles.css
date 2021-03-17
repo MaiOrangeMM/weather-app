@@ -2,6 +2,10 @@ body {
   height: 100vh;
 }
 
+section {
+    margin: 0 auto;
+}
+
 .box-overview {
   background-image: url("src/img/bg.png");
   background-repeat: no-repeat;
