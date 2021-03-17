@@ -1,16 +1,183 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Weather App</title>
+    <meta charset="UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+    <script src="https://kit.fontawesome.com/fc10ec9d00.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link href="src/styles.css" />
 </head>
 
-<body>
-    <h1>Hello</h1>
+<body class="d-flex align-items-center justify-content-center">
+    <section class="shadow-lg bg-body">
+        <div class="box-overview container py-5 px-5">
+            <div class="row justify-content-center pb-5">
+                <div class="col-6">
+                    <input type="text" class="form-control" id="input-city" placeholder="Enter your city" />
+                </div>
+
+                <div class="col-1">
+                    <button class="btn btn-danger" id="button-city">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row pt-5 pb-5">
+                <div class="col-7">
+                    <a href="#" id="link-position"><i class="fas fa-compass text-light"></i></a>
+                    <h1 class="h5 py-0 my-0 text-light" id="display-city">
+                        [Current City]
+                    </h1>
+                    <p class="h6 py-0 my-0 text-light" id="display-date">
+                        [Date] | [Time]
+                    </p>
+                    <div class="d-flex">
+                        <p class="h2 px-0 mx-0 text-light pe-1" id="display-temp">
+                            [Current Temp]
+                        </p>
+                        <a href="#" class="h6 text-light text-decoration-none" id="link-celcius">
+                            °C
+                        </a>
+                        <span class="h6 text-light">&nbsp;|&nbsp;</span>
+                        <a href="#" class="h6 text-light text-decoration-none" id="link-fahrenheit">
+                            °F
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="box-detail container py-5 px-5">
+            <div class="row pb-3">
+                <div class="col-7">
+                    <p class="h5 py-0 my-0">Details</p>
+                    <p class="h6 py-0 my-0 text-black-50">Weather Today</p>
+                </div>
+            </div>
+
+            <div class="row pb-5 px-2 gx-5">
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-2 d-flex justify-content-center">
+                            <i class="fas fa-cloud fs-3 align-self-center"></i>
+                        </div>
+
+                        <div class="col-10">
+                            <p class="h6 py-0 my-0">Condition</p>
+                            <p class="h6 py-0 my-0 text-black-50 text-capitalize" id="display-condition">
+                                [condition]
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-2 d-flex justify-content-center">
+                            <i class="fas fa-thermometer-half fs-2 align-self-center"></i>
+                        </div>
+
+                        <div class="col-10">
+                            <p class="h6 py-0 my-0">Temperature</p>
+                            <p class="h6 py-0 my-0 text-black-50" id="display-fromto">
+                                [min_temp] | [max_temp]
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-2 d-flex justify-content-center">
+                            <i class="fas fa-wind fs-3 align-self-center"></i>
+                        </div>
+
+                        <div class="col-10">
+                            <p class="h6 py-0 my-0">Wind speed</p>
+                            <p class="h6 py-0 my-0 text-black-50" id="display-windspeed">
+                                [wind_speed]
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pb-3">
+                <div class="col-7">
+                    <p class="h5 py-0 my-0">This Week</p>
+                    <p class="h6 py-0 my-0 text-black-50">Weekly Forecast</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center">
+                            <p class="card-title">Fri</p>
+                            <i class="fas fa-cloud-sun"></i>
+                            <p class="card-text text-black-50">10° | 12°</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center">
+                            <p class="card-title">Sa</p>
+                            <i class="fas fa-cloud-sun"></i>
+                            <p class="card-text text-black-50">10° | 12°</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center">
+                            <p class="card-title">Su</p>
+                            <i class="fas fa-cloud-sun"></i>
+                            <p class="card-text text-black-50">10° | 12°</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center">
+                            <p class="card-title">Mo</p>
+                            <i class="fas fa-cloud-sun"></i>
+                            <p class="card-text text-black-50">10° | 12°</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center">
+                            <p class="card-title">Tue</p>
+                            <i class="fas fa-cloud-sun"></i>
+                            <p class="card-text text-black-50">10° | 12°</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center">
+                            <p class="card-title">Wed</p>
+                            <i class="fas fa-cloud-sun"></i>
+                            <p class="card-text text-black-50">10° | 12°</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="src/index.js"></script>
 </body>
 
 </html>
