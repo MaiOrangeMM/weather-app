@@ -1,13 +1,9 @@
 body {
-  height: 100vh;
-}
-
-section {
-    margin: 0 auto;
+    height: 100vh;
 }
 
 .box-overview {
-  background-image: url("src/img/bg.png");
+  background-image: url("./img/bg.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
