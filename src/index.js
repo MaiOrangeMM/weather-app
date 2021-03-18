@@ -36,9 +36,12 @@ let dateTime = document.querySelector("#display-date");
 dateTime.innerHTML = `${days[day]} ${date} ${months[month]} | ${hour}:${minute}`;
 
 // API DATA
-let apiUrl = "https://api.openweathermap.org/data/2.5/weather?";
 let apiKey = "ea446638ab71304f56de134b4323492c";
+let apiUrl = "https://api.openweathermap.org/data/2.5/weather?";
+let forecastUrl = "https://api.openweathermap.org/data/2.5/onecall?";
 let unit = "metric";
+
+
 
 let displayCity = document.querySelector("#display-city");
 let displayTemp = document.querySelector("#display-temp");
@@ -70,12 +73,50 @@ function showCurrent(response) {
     celciusTemp = currentResponse.main.temp;
 }
 
+// Forecast
+function showForecast(responseForecast) {
+    // Loop
+    let displayForecast = document.querySelector("#display-forecast");
+
+    // Forecast Data Array
+    let forecastResponse = null;
+
+    for (let i = 1; i < 7; i++) {
+        // get i
+        let forecastResponse = responseForecast.data.daily[i];
+        console.log(forecastResponse);
+
+        // Forecast Day[]
+        let forecastTime = responseForecast.data.daily[i].dt;
+        let forecastDay = new Date(forecastTime * 1000).getDay();
+        console.log(forecastDay);
+
+        // Forecast Weather Icon
+        let forecastIcon = responseForecast.data.daily[i].weather[0].icon;
+
+        displayForecast.innerHTML += `
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <p class="card-title h6">${days[forecastDay]}</p>
+                        <img src="http://openweathermap.org/img/wn/${forecastIcon}@2x.png" width="50%">
+                        <p class="card-text text-black-50">${Math.round(forecastResponse.temp.min)}° | ${Math.round(forecastResponse.temp.max)}°</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+}
+
 function loadCurrent(position) {
     let lat = position.coords.latitude;
     let lon = position.coords.longitude;
 
     let apiCurrent = `${apiUrl}lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`;
     axios.get(apiCurrent).then(showCurrent);
+
+    let apiForecast = `${forecastUrl}lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`;
+    axios.get(apiForecast).then(showForecast);
 }
 
 navigator.geolocation.getCurrentPosition(loadCurrent);
@@ -143,5 +184,7 @@ getCelsius.addEventListener("click", convertCelsius);
 
 let getFahrenheit = document.querySelector("#link-fahrenheit");
 getFahrenheit.addEventListener("click", convertFahrenheit);
+
+
 
 

@@ -11,3 +11,8 @@ body {
 #display-temp {
   min-width: 2.5rem;
 }
+
+.card {
+  min-width: 6rem;
+  max-width: 6rem;
+}
