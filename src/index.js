@@ -45,19 +45,21 @@ let displayTemp = document.querySelector("#display-temp");
 let displayCondition = document.querySelector("#display-condition");
 let displayFromTo = document.querySelector("#display-fromto");
 let displayWindSpeed = document.querySelector("#display-windspeed");
+let displayWeatherIcon = document.querySelector("#display-weathericon");
 
 // ONLOAD
 function showCurrent(response) {
     // CURRENT CITY
     let currentResponse = response.data;
-    let onloadCity = currentResponse.name;
-    displayCity.innerHTML = onloadCity;
+    displayCity.innerHTML = currentResponse.name;
 
     // CURRENT TEMP
     let onloadTemp = Math.round(currentResponse.main.temp);
     displayTemp.innerHTML = onloadTemp;
 
     // CURRENT DETAILS
+    displayWeatherIcon.setAttribute("src", `http://openweathermap.org/img/wn/${currentResponse.weather[0].icon}@2x.png`);
+    displayWeatherIcon.setAttribute("alt", currentResponse.weather[0].description);
     displayCondition.innerHTML = currentResponse.weather[0].description;
     displayFromTo.innerHTML = `${Math.round(
         currentResponse.main.temp_min
