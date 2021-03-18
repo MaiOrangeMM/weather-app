@@ -1,4 +1,4 @@
-// DISPLAY DATE
+// DISPLAY DATE & TIME
 let now = new Date();
 
 let day = now.getDay();
@@ -23,8 +23,14 @@ let months = [
 ];
 
 let hour = now.getHours();
+if (hour < 10) {
+    hour = `0${hour}`;
+}
 
 let minute = now.getMinutes();
+if (minute < 10) {
+    minute = `0${minute}`;
+}
 
 let dateTime = document.querySelector("#display-date");
 dateTime.innerHTML = `${days[day]} ${date} ${months[month]} | ${hour}:${minute}`;
