@@ -7,3 +7,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+#display-temp {
+  min-width: 2.5rem;
+}

@@ -47,6 +47,7 @@ let displayFromTo = document.querySelector("#display-fromto");
 let displayWindSpeed = document.querySelector("#display-windspeed");
 let displayWeatherIcon = document.querySelector("#display-weathericon");
 
+
 // ONLOAD
 function showCurrent(response) {
     // CURRENT CITY
@@ -65,6 +66,8 @@ function showCurrent(response) {
         currentResponse.main.temp_min
     )}° | ${Math.round(currentResponse.main.temp_max)}°`;
     displayWindSpeed.innerHTML = `${currentResponse.wind.speed} km/h`;
+
+    celciusTemp = currentResponse.main.temp;
 }
 
 function loadCurrent(position) {
@@ -77,11 +80,13 @@ function loadCurrent(position) {
 
 navigator.geolocation.getCurrentPosition(loadCurrent);
 
+
 // GET LOCATION
 let getPosition = document.querySelector("#link-position");
 getPosition.addEventListener("click", () => {
     navigator.geolocation.getCurrentPosition(loadCurrent);
 });
+
 
 // ON SEARCH
 function showSearch() {
@@ -101,6 +106,7 @@ function showSearchResult(searchResult) {
     let resultData = searchResult;
     displayCity.innerHTML = resultData.data.name;
     displayTemp.innerHTML = Math.round(resultData.data.main.temp);
+    celciusTemp = resultData.data.main.temp;
 
     // Search Details
     displayCondition.innerHTML = resultData.data.weather[0].description;
@@ -113,27 +119,29 @@ function showSearchResult(searchResult) {
 let searchCity = document.querySelector("#button-city");
 searchCity.addEventListener("click", showSearch);
 
+
 // Convert Temperature Unit
 function convertCelsius(event) {
     event.preventDefault();
-    let celciusTemp = displayTemp.innerHTML;
-    console.log(celciusTemp);
-    celciusTemp = Number(celciusTemp);
-    console.log(celciusTemp);
-    displayTemp.innerHTML = celciusTemp;
-    console.log(displayTemp.innerHTML);
+    displayTemp.innerHTML = Math.round(celciusTemp);
+    getCelsius.classList.remove("text-muted");
+    getFahrenheit.classList.add("text-muted");
 }
 
 function convertFahrenheit(event) {
     event.preventDefault();
-    let fahrenheitTemp = displayTemp.innerHTML;
-    fahrenheitTemp = Number(fahrenheitTemp);
-    fahrenheitTemp = Math.round((fahrenheitTemp * 9) / 5 + 32);
+    let fahrenheitTemp = Math.round((celciusTemp * 9) / 5 + 32);
     displayTemp.innerHTML = fahrenheitTemp;
+    getFahrenheit.classList.remove("text-muted");
+    getCelsius.classList.add("text-muted");
 }
+
+let celciusTemp = null;
 
 let getCelsius = document.querySelector("#link-celcius");
 getCelsius.addEventListener("click", convertCelsius);
 
 let getFahrenheit = document.querySelector("#link-fahrenheit");
 getFahrenheit.addEventListener("click", convertFahrenheit);
+
+
