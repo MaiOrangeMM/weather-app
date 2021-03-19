@@ -41,14 +41,17 @@ let apiUrl = "https://api.openweathermap.org/data/2.5/weather?";
 let forecastUrl = "https://api.openweathermap.org/data/2.5/onecall?";
 let unit = "metric";
 
+let geoAPIKey = "463df0b21ba8484bb2e6f44bae41dac9";
+let geoAPIUrl = "https://api.opencagedata.com/geocode/v1/json?q=";
 
-
+// GLOBAL VAR
 let displayCity = document.querySelector("#display-city");
 let displayTemp = document.querySelector("#display-temp");
 let displayCondition = document.querySelector("#display-condition");
 let displayFromTo = document.querySelector("#display-fromto");
 let displayWindSpeed = document.querySelector("#display-windspeed");
 let displayWeatherIcon = document.querySelector("#display-weathericon");
+let inputCity = document.querySelector("#input-city");
 
 
 // ONLOAD
@@ -79,8 +82,6 @@ function showForecast(responseForecast) {
     let displayForecast = document.querySelector("#display-forecast");
 
     // Forecast Data Array
-    let forecastResponse = null;
-
     for (let i = 1; i < 7; i++) {
         // get i
         let forecastResponse = responseForecast.data.daily[i];
@@ -89,7 +90,6 @@ function showForecast(responseForecast) {
         // Forecast Day[]
         let forecastTime = responseForecast.data.daily[i].dt;
         let forecastDay = new Date(forecastTime * 1000).getDay();
-        console.log(forecastDay);
 
         // Forecast Weather Icon
         let forecastIcon = responseForecast.data.daily[i].weather[0].icon;
@@ -131,12 +131,12 @@ getPosition.addEventListener("click", () => {
 
 // ON SEARCH
 function showSearch() {
-    let inputCity = document.querySelector("#input-city");
     let apiSearch = `${apiUrl}q=${inputCity.value}&units=${unit}&appid=${apiKey}`;
 
     if (inputCity.value) {
         inputCity.classList.remove("is-invalid");
         axios.get(apiSearch).then(showSearchResult);
+        getCordFromCity();
         inputCity.value = "";
     } else {
         inputCity.classList.add("is-invalid");
@@ -155,6 +155,21 @@ function showSearchResult(searchResult) {
         resultData.data.main.temp_min
     )}° | ${Math.round(resultData.data.main.temp_max)}°`;
     displayWindSpeed.innerHTML = `${resultData.data.wind.speed} km/h`;
+}
+
+function showSearchForecast(responseSearchForecast) {
+    let latSearchForecast = Math.round(responseSearchForecast.data.results[0].geometry.lat);
+    let lonSearchForecast = Math.round(responseSearchForecast.data.results[0].geometry.lng);
+    console.log(latSearchForecast);
+    console.log(lonSearchForecast);
+
+    let apiSearchForecast = `${forecastUrl}lat=${latSearchForecast}&lon=${lonSearchForecast}&units=${unit}&appid=${apiKey}`;
+    axios.get(apiSearchForecast).then(showForecast);
+}
+
+function getCordFromCity() {
+    let apiGeo = `${geoAPIUrl}${inputCity.value}&key=${geoAPIKey}`;
+    axios.get(apiGeo).then(showSearchForecast);
 }
 
 let searchCity = document.querySelector("#button-city");
