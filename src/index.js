@@ -80,6 +80,7 @@ function showCurrent(response) {
 function showForecast(responseForecast) {
     // Loop
     let displayForecast = document.querySelector("#display-forecast");
+    displayForecast.innerHTML = "";
 
     // Forecast Data Array
     for (let i = 1; i < 7; i++) {
@@ -107,6 +108,7 @@ function showForecast(responseForecast) {
         `;
     }
 }
+
 
 function loadCurrent(position) {
     let lat = position.coords.latitude;
@@ -160,8 +162,6 @@ function showSearchResult(searchResult) {
 function showSearchForecast(responseSearchForecast) {
     let latSearchForecast = Math.round(responseSearchForecast.data.results[0].geometry.lat);
     let lonSearchForecast = Math.round(responseSearchForecast.data.results[0].geometry.lng);
-    console.log(latSearchForecast);
-    console.log(lonSearchForecast);
 
     let apiSearchForecast = `${forecastUrl}lat=${latSearchForecast}&lon=${lonSearchForecast}&units=${unit}&appid=${apiKey}`;
     axios.get(apiSearchForecast).then(showForecast);
