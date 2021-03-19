@@ -199,7 +199,3 @@ getCelsius.addEventListener("click", convertCelsius);
 
 let getFahrenheit = document.querySelector("#link-fahrenheit");
 getFahrenheit.addEventListener("click", convertFahrenheit);
-
-
-
-
