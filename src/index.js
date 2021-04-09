@@ -75,7 +75,7 @@ function showCurrent(response) {
   displayCondition.innerHTML = currentResponse.weather[0].description;
   displayFromTo.innerHTML = `${Math.round(
     currentResponse.main.temp_min
-  )}° | ${Math.round(currentResponse.main.temp_max)}°`;
+  )}° |  ${Math.round(currentResponse.main.temp_max)}°`;
   displayWindSpeed.innerHTML = `${currentResponse.wind.speed} km/h`;
 
   celciusTemp = currentResponse.main.temp;
@@ -101,7 +101,7 @@ function showForecast(responseForecast) {
     let forecastIcon = responseForecast.data.daily[i].weather[0].icon;
 
     displayForecast.innerHTML += `
-            <div class="col">
+            <div class="col py-2">
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
                         <p class="card-title h6">${days[forecastDay]}</p>
